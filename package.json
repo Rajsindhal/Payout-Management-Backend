@@ -4,10 +4,11 @@
   "description": "Payout Management System - Backend API (Node.js + Express + TypeScript + MongoDB)",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon src/server.ts",
     "build": "tsc --project tsconfig.json",
-    "start": "node dist/server.js",
-    "seed": "ts-node src/seed/seed.ts"
+    "start": "node --enable-source-maps dist/server.js",
+    "seed": "ts-node src/seed/seed.ts",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -18,7 +19,7 @@
     "express-validator": "^7.3.1",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.7.0",
+    "mongoose": "^8.12.1",
     "morgan": "^1.10.0"
   },
   "devDependencies": {

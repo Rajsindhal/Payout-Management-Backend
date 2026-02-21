@@ -20,7 +20,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
     }
 
     generateToken(res, {
-        userId: user._id.toString(),
+        userId: user.id.toString(),
         role: user.role,
         email: user.email,
         name: user.name,

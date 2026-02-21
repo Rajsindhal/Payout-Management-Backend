@@ -13,7 +13,6 @@ const userSchema = new Schema<IUser>(
     { timestamps: true, versionKey: false }
 );
 
-userSchema.index({ email: 1 }, { unique: true });
 userSchema.index({ role: 1 });
 
 userSchema.pre<IUser>("save", async function (next) {
@@ -25,11 +24,11 @@ userSchema.pre<IUser>("save", async function (next) {
 userSchema.methods.comparePassword = function (candidate: string): Promise<boolean> {
     return bcrypt.compare(candidate, this.password);
 };
-userSchema.options.toJSON = {
-    transform: (_doc, ret: Record<string, unknown>) => {
+userSchema.set("toJSON", {
+    transform: (_doc: any, ret: Record<string, unknown>) => {
         delete ret["password"];
         return ret;
     },
-};
+});
 
 export default model<IUser>("User", userSchema);
