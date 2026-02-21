@@ -8,7 +8,7 @@ import env from "./config/env";
 import { notFound, globalErrorHandler } from "./middleware/error.middleware";
 
 // ─── Route Imports (uncomment as they are implemented) ────────────────────────
-// import authRoutes   from "./routes/auth.routes";
+import authRoutes from "./routes/auth.routes";
 // import vendorRoutes from "./routes/vendor.routes";
 // import payoutRoutes from "./routes/payout.routes";
 
@@ -42,7 +42,7 @@ app.get("/health", (_req: Request, res: Response) => {
 });
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
-// app.use("/api/v1/auth",    authRoutes);
+app.use("/api/v1/auth", authRoutes);
 // app.use("/api/v1/vendors", vendorRoutes);
 // app.use("/api/v1/payouts", payoutRoutes);
 
