@@ -59,7 +59,7 @@ export const createPayout = asyncHandler(async (req: Request, res: Response) => 
     });
 
     await logAudit({
-        payout_id: payout._id.toString(),
+        payout_id: String(payout._id),
         action: "CREATED",
         performed_by: authReq.user.userId,
         performer_name: authReq.user.name,
@@ -84,7 +84,7 @@ export const submitPayout = asyncHandler(async (req: Request, res: Response) => 
     await payout.save();
 
     await logAudit({
-        payout_id: payout._id.toString(),
+        payout_id: String(payout._id),
         action: "SUBMITTED",
         performed_by: authReq.user.userId,
         performer_name: authReq.user.name
@@ -108,7 +108,7 @@ export const approvePayout = asyncHandler(async (req: Request, res: Response) =>
     await payout.save();
 
     await logAudit({
-        payout_id: payout._id.toString(),
+        payout_id: String(payout._id),
         action: "APPROVED",
         performed_by: authReq.user.userId,
         performer_name: authReq.user.name
@@ -134,7 +134,7 @@ export const rejectPayout = asyncHandler(async (req: Request, res: Response) => 
     await payout.save();
 
     await logAudit({
-        payout_id: payout._id.toString(),
+        payout_id: String(payout._id),
         action: "REJECTED",
         performed_by: authReq.user.userId,
         performer_name: authReq.user.name,
