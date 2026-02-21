@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { ApiSuccessResponse } from "../types";
+import { ApiSuccess } from "../types";
 
 export class ApiResponse {
     static success<T>(
@@ -9,7 +9,7 @@ export class ApiResponse {
         data?: T,
         meta?: Record<string, unknown>
     ): Response {
-        const payload: ApiSuccessResponse<T> = { success: true, message };
+        const payload: ApiSuccess<T> = { success: true, message };
         if (data !== undefined) payload.data = data;
         if (meta !== undefined) payload.meta = meta;
         return res.status(statusCode).json(payload);

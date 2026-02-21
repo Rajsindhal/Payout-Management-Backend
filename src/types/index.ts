@@ -1,32 +1,28 @@
 import { Request } from "express";
-import { Types } from "mongoose";
-
-export type UserRole = "OPS" | "FINANCE";
+import { Document, Types } from "mongoose";
+import { Role, PayoutStatus, PayoutMode, AuditAction } from "../constants";
 
 export interface JwtPayload {
     userId: string;
-    role: UserRole;
+    role: Role;
     email: string;
 }
 
-export interface AuthenticatedRequest extends Request {
+export interface AuthRequest extends Request {
     user: JwtPayload;
 }
 
-// ─── MongoDB Document Types ───────────────────────────────────────────────────
-
-export interface IUser {
-    _id: Types.ObjectId;
+export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
-    role: UserRole;
+    role: Role;
     createdAt: Date;
     updatedAt: Date;
+    comparePassword(candidate: string): Promise<boolean>;
 }
 
-export interface IVendor {
-    _id: Types.ObjectId;
+export interface IVendor extends Document {
     name: string;
     upi_id?: string;
     bank_account?: string;
@@ -36,11 +32,7 @@ export interface IVendor {
     updatedAt: Date;
 }
 
-export type PayoutStatus = "Draft" | "Submitted" | "Approved" | "Rejected";
-export type PayoutMode = "UPI" | "IMPS" | "NEFT";
-
-export interface IPayout {
-    _id: Types.ObjectId;
+export interface IPayout extends Document {
     vendor_id: Types.ObjectId;
     amount: number;
     mode: PayoutMode;
@@ -52,20 +44,16 @@ export interface IPayout {
     updatedAt: Date;
 }
 
-export type AuditAction = "CREATED" | "SUBMITTED" | "APPROVED" | "REJECTED";
-
-export interface IPayoutAudit {
-    _id: Types.ObjectId;
+export interface IPayoutAudit extends Document {
     payout_id: Types.ObjectId;
     action: AuditAction;
     performed_by: Types.ObjectId;
+    performer_name: string;
     note?: string;
     createdAt: Date;
 }
 
-// ─── Generic API Shape ────────────────────────────────────────────────────────
-
-export interface ApiSuccessResponse<T = unknown> {
+export interface ApiSuccess<T = unknown> {
     success: true;
     message: string;
     data?: T;
