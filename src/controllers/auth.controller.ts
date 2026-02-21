@@ -23,6 +23,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
         userId: user._id.toString(),
         role: user.role,
         email: user.email,
+        name: user.name,
     });
 
     ApiResponse.ok(res, "Login successful", { user });
