@@ -4,10 +4,6 @@ import { ApiError } from "../utils/ApiError";
 import env from "../config/env";
 import { AuthRequest, JwtPayload } from "../types";
 
-/**
- * Protects routes by verifying the JWT stored in the httpOnly cookie.
- * Attaches the decoded payload to req.user for downstream use.
- */
 export const requireAuth = (
     req: Request,
     _res: Response,
@@ -24,8 +20,6 @@ export const requireAuth = (
         (req as AuthRequest).user = decoded;
         next();
     } catch (error) {
-        // Note: JsonWebTokenError and TokenExpiredError instances are automatically 
-        // mapped to 401s in our global error handler because they bubble up through next(error)
         next(error);
     }
 };
